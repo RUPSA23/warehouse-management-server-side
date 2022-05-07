@@ -35,7 +35,6 @@ async function run() {
 
         app.put('/dress/:id', async(req, res) => {
             const id = req.params.id;
-            console.log(id);
             const data = req.body;
             const query = {_id: ObjectId(id)};
             const options = {upsert: true};
