@@ -32,6 +32,22 @@ async function run() {
             const dress = await dressesCollection.findOne(query);
             res.send(dress);
         })
+
+        app.put('/dress/:id', async(req, res) => {
+            const id = req.params.id;
+            console.log(id);
+            const data = req.body;
+            const query = {_id: ObjectId(id)};
+            const options = {upsert: true};
+            const updatedDoc = {
+                $set: {
+                    quantity: data.quantity
+                }
+            };
+            const result = await dressesCollection.updateOne(query, updatedDoc, options);
+            const dress = await dressesCollection.findOne(query);
+            res.send(dress);
+        })
     }
     finally {
 
