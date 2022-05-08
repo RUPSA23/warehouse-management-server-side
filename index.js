@@ -33,6 +33,12 @@ async function run() {
             res.send(alldresses);
         })
 
+        app.post('/Items', async (req, res) => { 
+            const newItem = req.body;
+            const result =  await dressesCollection.insertOne(newItem);
+            res.send(result);    
+        });
+
         app.get('/dress/:id', async (req, res) => {
             const id = req.params.id;
             const query = {_id: ObjectId(id)};
