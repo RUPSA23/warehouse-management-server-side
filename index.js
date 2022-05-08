@@ -21,9 +21,16 @@ async function run() {
 
         app.get('/dresses', async (req, res) => {
             const query = {};
-            const cursor = dressesCollection.find(query);
+            const cursor = dressesCollection.find(query).limit(6);
             const dresses = await cursor.toArray();
             res.send(dresses);
+        })
+
+        app.get('/alldresses', async (req, res) => {
+            const query = {};
+            const cursor = dressesCollection.find(query);
+            const alldresses = await cursor.toArray();
+            res.send(alldresses);
         })
 
         app.get('/dress/:id', async (req, res) => {
@@ -46,6 +53,13 @@ async function run() {
             const result = await dressesCollection.updateOne(query, updatedDoc, options);
             const dress = await dressesCollection.findOne(query);
             res.send(dress);
+        })
+
+        app.delete('/dress/:id', async (req, res)=>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await dressesCollection.deleteOne(query);
+            res.send(result);
         })
     }
     finally {
